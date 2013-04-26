@@ -1,0 +1,36 @@
+{
+  "service": "mycol001",
+  "mongodb": {
+    "host": "127.0.0.1",
+    "port": 27017,
+    "db": "test",
+    "collection": "blog_posts"
+  },
+  "mysql": {
+    "host": "localhost",
+    "user": "root",
+    "password": "",
+    "db": "test",
+    "table": "blog_posts"
+  },
+  "sync_fields": {
+    "_id": "int",
+    "vid": "int",
+    "cid": "int",
+    "vmsg": "string",
+    "omsg": "string",
+    "pid": "int",
+    "order": "int",
+    "depth": "int",
+    "sid": "int",
+    "edit_type": "int"
+  },
+  "transform" : {
+    "field_name" : {
+      "order": "_order"
+    },
+    "field_value" : {
+      "cid": "transform_cid"
+    }
+  }
+}
