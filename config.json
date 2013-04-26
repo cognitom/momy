@@ -15,15 +15,9 @@
   },
   "sync_fields": {
     "_id": "int",
-    "vid": "int",
-    "cid": "int",
-    "vmsg": "string",
-    "omsg": "string",
-    "pid": "int",
-    "order": "int",
-    "depth": "int",
-    "sid": "int",
-    "edit_type": "int"
+    "field1": "int",
+    "field2": "string",
+    "order": "int"
   },
   "transform" : {
     "field_name" : {
