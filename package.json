@@ -1,23 +1,23 @@
 {
-  "name": "mongo2mysql",
-  "version": "0.0.0",
-  "description": "Streaming data from MongoDB into MySQL",
-  "main": "app.js",
+  "name": "m2m",
+  "version": "0.1.0",
+  "description": "MongoDB to MySQL replication",
+  "main": "index.js",
+  "bin": {
+    "m2m": "./bin/m2m.js"
+  },
   "scripts": {
     "test": ""
   },
   "dependencies": {
-    "underscore": "=1.4.3",
-    "forever": "=0.10.0",
-    "async": "~0.2.7",
-    "colors": "~0.6.0-1",
-    "mongodb": "~1.3.0",
-    "mysql": "~2.0.0-alpha7"
+    "mongodb": "^2.0.45",
+    "mysql": "^2.9.0",
+    "underscore": "^1.4.3"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/doubaokun/MongoDB-to-MySQL"
+    "url": "git://github.com/cognitom/m2m"
   },
-  "author": "Bruce Dou",
+  "author": "Tsutomu Kawamura",
   "license": "MIT"
 }
