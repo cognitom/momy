@@ -7,7 +7,7 @@
     "m2m": "./bin/m2m.js"
   },
   "scripts": {
-    "test": ""
+    "test": "eslint -c .eslintrc lib bin"
   },
   "dependencies": {
     "mongodb": "^2.0.45",
@@ -19,5 +19,8 @@
     "url": "git://github.com/cognitom/m2m"
   },
   "author": "Tsutomu Kawamura",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^1.7.1"
+  }
 }
