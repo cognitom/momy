@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
-var Tailer = require('../lib/tailer.js')
-var fs     = require('fs')
+'use strict'
 
-var DEFAULT_CONFIG_PATH = 'm2mfile.json'
+const
+  DEFAULT_CONFIG_PATH = 'm2mfile.json',
 
-var refresh = process.argv.some(function(c) { return c == '--import' })
-var file = process.argv.reduce(function(p, c, i, a) {
-  return c == '--config' && a[i + 1] ? a[i + 1] : p
-}, DEFAULT_CONFIG_PATH)
-var config = JSON.parse(fs.readFileSync(process.cwd() + '/' + file))
+  Tailer = require('../lib/tailer.js'),
+  fs     = require('fs'),
 
-var tailer = new Tailer(config)
+  refresh = process.argv.some(c => c == '--import'),
+  finder  = (p, c, i, a) => c == '--config' && a[i + 1] ? a[i + 1] : p,
+  file    = process.argv.reduce(finder, DEFAULT_CONFIG_PATH),
+  config  = JSON.parse(fs.readFileSync(process.cwd() + '/' + file)),
+  tailer  = new Tailer(config)
+
 if (refresh)
   tailer.importAndStart()
 else
