@@ -21,7 +21,7 @@ $ npm install --save m2m
 
 ### MongoDB
 
-m2m uses [Replica Set](http://docs.mongodb.org/manual/replication/) feature in MongoDB. But you don't have to replicate between MongoDB actually. Just follow the step below.
+m2m uses [Replica Set](http://docs.mongodb.org/manual/replication/) feature in MongoDB. But you don't have to replicate between MongoDB actually. Just follow the steps below.
 
 Start a new mongo instance with no data:
 
@@ -69,14 +69,6 @@ Create a new `m2mfile.json` file like this:
     "field2": "int",
     "field3": "string",
     "field4": "string"
-  },
-  "transform" : {
-    "field_name" : {
-      "order": "_order"
-    },
-    "field_value" : {
-      "cid": "transform_cid",
-    }
   }
 }
 ```
