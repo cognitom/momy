@@ -3,7 +3,7 @@
 'use strict'
 
 const
-  DEFAULT_CONFIG_PATH = 'm2mfile.json',
+  DEFAULT_CONFIG_PATH = 'momyfile.json',
 
   Tailer = require('../lib/tailer.js'),
   fs     = require('fs'),
