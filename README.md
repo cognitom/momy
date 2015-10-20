@@ -49,29 +49,30 @@ Create a new `m2mfile.json` file like this:
 
 ```json
 {
-  "service": "mycol001",
-  "mongodb": {
-    "host": "127.0.0.1",
-    "port": 27017,
-    "db": "test",
-    "collection": "blog_posts"
-  },
-  "mysql": {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "db": "test",
-    "table": "blog_posts"
-  },
-  "sync_fields": {
-    "_id": "int",
-    "field1": "int",
-    "field2": "int",
-    "field3": "string",
-    "field4": "string"
+  "src": "mongodb://localhost:27017/dbname",
+  "dist": "mysql://root@localhost:3306/dbname",
+  "prefix": "t_",
+  "collections": {
+    "collection1": {
+      "_id": "int",
+      "field1": "int",
+      "field2": "string",
+      "field3": "boolean"
+    },
+    "collection2": {
+      "_id": "int",
+      "field1": "int",
+      "field2": "string",
+      "field3": "boolean"
+    }
   }
 }
 ```
+
+- `src`: the URL of the MongoDB server
+- `dist`: the URL of the MySQL server
+- `prefix`: optional prefix for table name. The name of the table would be `t_collection1` in the example above.
+- `collections`: set the collections and fields to sync
 
 ## Usage
 
