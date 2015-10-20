@@ -1,3 +1,5 @@
+![Momy](images/momy.png)
+
 # Momy
 
 [Momy](https://goo.gl/maps/s9hXxKyoACv) is a simple cli tool for replicating MongoDB to MySQL in realtime.
