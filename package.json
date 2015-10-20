@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "mongodb": "^2.0.45",
-    "mysql": "^2.9.0",
-    "underscore": "^1.4.3"
+    "mysql": "^2.9.0"
   },
   "repository": {
     "type": "git",
