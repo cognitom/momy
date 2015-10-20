@@ -1,6 +1,6 @@
-# m2m : MongoDB to MySQL replication
+# Momy
 
-m2m is a simple cli tool for replicating MongoDB to MySQL in realtime.
+[Momy](https://goo.gl/maps/s9hXxKyoACv) is a simple cli tool for replicating MongoDB to MySQL in realtime.
 
 - Enable SQL query on data in NoSQL database
 - Enable to be accessed by Excel / Access
@@ -8,20 +8,20 @@ m2m is a simple cli tool for replicating MongoDB to MySQL in realtime.
 ## Installation
 
 ```bash
-$ npm install -g m2m
+$ npm install -g momy
 ```
 
 or install it within the project locally:
 
 ```bash
-$ npm install --save m2m
+$ npm install --save momy
 ```
 
 ## Preparation
 
 ### MongoDB
 
-m2m uses [Replica Set](http://docs.mongodb.org/manual/replication/) feature in MongoDB. But you don't have to replicate between MongoDB actually. Just follow the steps below.
+Momy uses [Replica Set](http://docs.mongodb.org/manual/replication/) feature in MongoDB. But you don't have to replicate between MongoDB actually. Just follow the steps below.
 
 Start a new mongo instance with no data:
 
@@ -45,7 +45,7 @@ Launch MySQL instance, and create the new database to use. The tables will be cr
 
 ### Configuration
 
-Create a new `m2mfile.json` file like this:
+Create a new `momyfile.json` file like this:
 
 ```json
 {
@@ -79,19 +79,19 @@ Create a new `m2mfile.json` file like this:
 At the first run, we need to import all the data from MongoDB:
 
 ```bash
-$ m2m --config m2mfile.js --import
+$ momy --config momyfile.js --import
 ```
 
 Then start the daemon to streaming data:
 
 ```bash
-$ m2m --config m2mfile.js
+$ momy --config momyfile.js
 ```
 
 or
 
 ```bash
-$ forever m2m --config m2mfile.js
+$ forever momy --config momyfile.js
 ```
 
 ## License

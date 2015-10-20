@@ -1,5 +1,5 @@
 {
-  "name": "m2m",
+  "name": "momy",
   "version": "0.1.0",
   "description": "MongoDB to MySQL replication",
   "main": "index.js",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cognitom/m2m"
+    "url": "git://github.com/cognitom/momy"
   },
   "author": "Tsutomu Kawamura",
   "license": "MIT",
