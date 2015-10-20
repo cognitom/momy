@@ -56,13 +56,13 @@ Create a new `momyfile.json` file like this:
   "prefix": "t_",
   "collections": {
     "collection1": {
-      "_id": "int",
+      "_id": "number",
       "field1": "number",
       "field2": "string",
       "field3": "boolean"
     },
     "collection2": {
-      "_id": "int",
+      "_id": "number",
       "field1": "number",
       "field2": "string",
       "field3": "boolean"
