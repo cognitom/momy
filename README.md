@@ -55,13 +55,13 @@ Create a new `m2mfile.json` file like this:
   "collections": {
     "collection1": {
       "_id": "int",
-      "field1": "int",
+      "field1": "number",
       "field2": "string",
       "field3": "boolean"
     },
     "collection2": {
       "_id": "int",
-      "field1": "int",
+      "field1": "number",
       "field2": "string",
       "field3": "boolean"
     }
