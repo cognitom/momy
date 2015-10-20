@@ -81,19 +81,19 @@ Create a new `momyfile.json` file like this:
 At the first run, we need to import all the data from MongoDB:
 
 ```bash
-$ momy --config momyfile.js --import
+$ momy --config momyfile.json --import
 ```
 
 Then start the daemon to streaming data:
 
 ```bash
-$ momy --config momyfile.js
+$ momy --config momyfile.json
 ```
 
 or
 
 ```bash
-$ forever momy --config momyfile.js
+$ forever momy --config momyfile.json
 ```
 
 ## License
