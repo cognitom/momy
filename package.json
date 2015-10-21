@@ -1,10 +1,10 @@
 {
   "name": "momy",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MongoDB to MySQL replication",
   "main": "index.js",
   "bin": {
-    "m2m": "./bin/momy.js"
+    "momy": "./bin/momy.js"
   },
   "scripts": {
     "test": "eslint -c .eslintrc lib bin"
