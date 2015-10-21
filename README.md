@@ -1,11 +1,11 @@
-![Momy](images/momy.png)
-
 # Momy
 
 [Momy](https://goo.gl/maps/s9hXxKyoACv) is a simple cli tool for replicating MongoDB to MySQL in realtime.
 
 - Enable SQL query on data in NoSQL database
 - Enable to be accessed by Excel / Access
+
+![Momy](images/concept.png)
 
 ## Installation
 
