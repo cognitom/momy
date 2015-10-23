@@ -57,12 +57,14 @@ Create a new `momyfile.json` file like this:
   "collections": {
     "collection1": {
       "_id": "number",
+      "createdAt": "DATETIME",
       "field1": "number",
       "field2": "string",
       "field3": "boolean"
     },
     "collection2": {
-      "_id": "number",
+      "_id": "string",
+      "createdAt": "DATETIME",
       "field1": "number",
       "field2": "string",
       "field3": "boolean"
@@ -75,6 +77,29 @@ Create a new `momyfile.json` file like this:
 - `dist`: the URL of the MySQL server
 - `prefix`: optional prefix for table name. The name of the table would be `t_collection1` in the example above.
 - `collections`: set the collections and fields to sync
+
+`_id` field is required for each collection and should be `string` or `number`.
+
+### Field types
+
+```
+"<field_name>": "<field_tipe>"
+```
+
+Currently these native types are supported:
+
+- `BIGINT`
+- `TINYINT`
+- `VARCHAR`
+- `DATE`
+- `DATETIME`
+- `TIME`
+
+There're also some aliases:
+
+- `number` => `BIGINT`
+- `boolean` => `TINYINT`
+- `string` => `VARCHAR`
 
 ## Usage
 
