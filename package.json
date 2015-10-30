@@ -1,6 +1,6 @@
 {
   "name": "momy",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "MongoDB to MySQL replication",
   "main": "index.js",
   "bin": {
@@ -10,6 +10,7 @@
     "test": "eslint -c .eslintrc lib bin"
   },
   "dependencies": {
+    "moment": "^2.10.6",
     "mongodb": "^2.0.45",
     "mysql": "^2.9.0"
   },
