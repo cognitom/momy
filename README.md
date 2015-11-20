@@ -60,7 +60,8 @@ Create a new `momyfile.json` file like this:
       "createdAt": "DATETIME",
       "field1": "number",
       "field2": "string",
-      "field3": "boolean"
+      "field3": "boolean",
+      "field4.subfield": "string"
     },
     "collection2": {
       "_id": "string",
@@ -80,11 +81,17 @@ Create a new `momyfile.json` file like this:
 
 `_id` field is required for each collection and should be `string` or `number`.
 
-### Field types
+### Field names and types
 
 ```
 "<field_name>": "<field_tipe>"
 ```
+or, field_name could be dot-concatenated:
+```
+"<field_name>.<sub_name>": "<field_tipe>"
+```
+
+For example, if you have `{ a: { b: { c: 'hey!' } } }` then `"a.b.c": "string"`
 
 Currently these native types are supported:
 
