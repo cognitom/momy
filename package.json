@@ -1,6 +1,6 @@
 {
   "name": "momy",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "MongoDB to MySQL replication",
   "main": "index.js",
   "bin": {

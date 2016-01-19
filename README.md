@@ -54,6 +54,7 @@ Create a new `momyfile.json` file like this:
   "src": "mongodb://localhost:27017/dbname",
   "dist": "mysql://root@localhost:3306/dbname",
   "prefix": "t_",
+  "case": "camel",
   "collections": {
     "collection1": {
       "_id": "number",
@@ -77,6 +78,7 @@ Create a new `momyfile.json` file like this:
 - `src`: the URL of the MongoDB server
 - `dist`: the URL of the MySQL server
 - `prefix`: optional prefix for table name. The name of the table would be `t_collection1` in the example above.
+- `case`: optional. `snake` or `camel`
 - `collections`: set the collections and fields to sync
 
 `_id` field is required for each collection and should be `string` or `number`.
