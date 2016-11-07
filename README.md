@@ -69,7 +69,8 @@ Create a new `momyfile.json` file like this:
       "createdAt": "DATETIME",
       "field1": "number",
       "field2": "string",
-      "field3": "boolean"
+      "field3": "boolean",
+      "field4": "TEXT"
     }
   }
 }
@@ -103,6 +104,7 @@ Currently these native types are supported:
 - `DATE`
 - `DATETIME`
 - `TIME`
+- `TEXT`
 
 There're also some aliases:
 
