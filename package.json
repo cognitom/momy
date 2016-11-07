@@ -6,6 +6,11 @@
   "bin": {
     "momy": "./bin/momy.js"
   },
+  "files": [
+    "bin",
+    "lib",
+    "index.js"
+  ],
   "scripts": {
     "test": "standard bin/* lib/*"
   },
