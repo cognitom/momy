@@ -7,21 +7,21 @@
     "momy": "./bin/momy.js"
   },
   "scripts": {
-    "test": "eslint -c .eslintrc lib bin"
+    "test": "standard bin/* lib/*"
   },
   "dependencies": {
-    "change-case": "^2.3.1",
-    "moment": "^2.10.6",
-    "mongodb": "^2.0.45",
-    "mysql": "^2.9.0"
+    "change-case": "^3.0.0",
+    "moment": "^2.15.2",
+    "mongodb": "^2.2.11",
+    "mysql": "^2.12.0"
+  },
+  "devDependencies": {
+    "standard": "^8.5.0"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/cognitom/momy"
   },
   "author": "Tsutomu Kawamura",
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^1.7.1"
-  }
+  "license": "MIT"
 }

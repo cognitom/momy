@@ -2,19 +2,15 @@
 
 'use strict'
 
-const
-  DEFAULT_CONFIG_PATH = 'momyfile.json',
+const Tailer = require('../lib/tailer.js')
+const fs = require('fs')
 
-  Tailer = require('../lib/tailer.js'),
-  fs     = require('fs'),
+const DEFAULT_CONFIG_PATH = 'momyfile.json'
+const refresh = process.argv.some(c => c === '--import')
+const finder = (p, c, i, a) => c === '--config' && a[i + 1] ? a[i + 1] : p
+const file = process.argv.reduce(finder, DEFAULT_CONFIG_PATH)
+const config = JSON.parse(fs.readFileSync(process.cwd() + '/' + file))
+const tailer = new Tailer(config)
 
-  refresh = process.argv.some(c => c == '--import'),
-  finder  = (p, c, i, a) => c == '--config' && a[i + 1] ? a[i + 1] : p,
-  file    = process.argv.reduce(finder, DEFAULT_CONFIG_PATH),
-  config  = JSON.parse(fs.readFileSync(process.cwd() + '/' + file)),
-  tailer  = new Tailer(config)
-
-if (refresh)
-  tailer.importAndStart()
-else
-  tailer.start()
+if (refresh) tailer.importAndStart()
+else tailer.start()
