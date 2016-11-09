@@ -148,6 +148,19 @@ To run the tests:
 $ npm test
 ```
 
+To test the code manually, start `mongodb` and `momy`:
+
+```bash
+$ npm run pretest
+$ npm run try
+```
+
+Do something, then kill `momy` and stop `mongodb`:
+
+```bash
+$ npm run posttest
+```
+
 ## License
 
 MIT
