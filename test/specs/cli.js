@@ -95,6 +95,34 @@ describe('Momy CLI', () => {
     assert.equal(r1[0].field2, string285)
   }))
 
+  it('syncs a doc updated', co.wrap(function* () {
+    const colName = 'colBasicTypes'
+    const doc = {
+      field1: true, // boolean
+      field2: 123, // number
+      field3: 'Tom' // string
+    }
+    const r0 = yield mo.collection(colName).insertOne(doc)
+    yield wait(waitingTime) // wait for syncing
+    const r1 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r1[0].field3, 'Tom')
+
+    yield mo.collection(colName).update({_id: r0.insertedId}, {$set: {field3: 'John'}})
+    yield wait(waitingTime) // wait for syncing
+    const r2 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r2[0].field3, 'John')
+
+    yield mo.collection(colName).update({_id: r0.insertedId}, {$unset: {field3: true}})
+    yield wait(waitingTime) // wait for syncing
+    const r3 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r3[0].field3, '')
+
+    yield mo.collection(colName).update({_id: r0.insertedId}, doc)
+    yield wait(waitingTime) // wait for syncing
+    const r4 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r4[0].field3, 'Tom')
+  }))
+
   after(() => {
     tailer.stop()
   })
