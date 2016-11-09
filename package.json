@@ -12,7 +12,11 @@
     "index.js"
   ],
   "scripts": {
-    "test": "standard bin/* lib/*"
+    "pretest": "mongodb-runner start --topology=replicaset --port=27017",
+    "test": "npm run standard && npm run mocha",
+    "posttest": "mongodb-runner stop --topology=replicaset --port=27017",
+    "standard": "standard bin/*.js lib/*.js test/**/*.js",
+    "mocha": "mocha -t 20000 test/specs/*.js"
   },
   "dependencies": {
     "change-case": "^3.0.0",
@@ -22,6 +26,9 @@
     "sqlstring": "^2.2.0"
   },
   "devDependencies": {
+    "co": "^4.6.0",
+    "mocha": "^3.1.2",
+    "mongodb-runner": "^3.4.0",
     "standard": "^8.5.0"
   },
   "repository": {

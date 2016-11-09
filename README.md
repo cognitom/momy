@@ -1,3 +1,5 @@
+[![Build Status][travis-image]][travis-url]
+
 # Momy
 
 [Momy](https://goo.gl/maps/s9hXxKyoACv) is a simple cli tool for replicating MongoDB to MySQL in realtime.
@@ -132,8 +134,25 @@ or
 $ forever momy --config momyfile.json
 ```
 
+## For contributors
+
+Before testing, install MySQL into your environment. Then, create a new database:
+
+```bash
+$ mysql -uroot -e 'create database momy;'
+```
+
+To run the tests:
+
+```bash
+$ npm test
+```
+
 ## License
 
 MIT
 
 This library was originally made by @doubaokun as [MongoDB-to-MySQL](https://github.com/doubaokun/MongoDB-to-MySQL) and rewritten by @cognitom.
+
+[travis-image]:https://img.shields.io/travis/cognitom/momy.svg?style=flat-square
+[travis-url]:https://travis-ci.org/cognitom/momy
