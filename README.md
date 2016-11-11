@@ -81,7 +81,7 @@ Create a new `momyfile.json` file like this:
 - `src`: the URL of the MongoDB server
 - `dist`: the URL of the MySQL server
 - `prefix`: optional prefix for table name. The name of the table would be `t_collection1` in the example above.
-- `case`: optional. `snake` or `camel`
+- `fieldCase`: optional. `snake` or `camel`. See the section below.
 - `collections`: set the collections and fields to sync
 
 `_id` field is required for each collection and should be `string` or `number`.
@@ -113,6 +113,15 @@ There're also some aliases:
 - `number` => `BIGINT`
 - `boolean` => `TINYINT`
 - `string` => `VARCHAR`
+
+### Field name normalization: fieldCase
+
+Some system like Microsoft Access don't allow *dot-concatenated field names*, so `address.street` will cause an error. For such a case, use `fieldCase`:
+
+- `snake`: `address.street` --> `address_street`
+- `camel`: `address.street` --> `addressStreet`
+
+**Note**: if you set `fieldCase` value, the name of `_id` field will change into `id` without `_`, too.
 
 ## Usage
 
