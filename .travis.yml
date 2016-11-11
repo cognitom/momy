@@ -6,3 +6,5 @@ services:
   - mysql
 before_script:
   - mysql -e 'create database momy;'
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
