@@ -8,11 +8,3 @@ before_script:
   - mysql -e 'create database momy;'
 after_success:
   - bash <(curl -s https://codecov.io/bash)
-env:
-  - CXX=g++-4.8
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - g++-4.8
