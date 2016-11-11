@@ -81,7 +81,7 @@ describe('Momy CLI', () => {
 
   it('syncs a single doc with string types', co.wrap(function* () {
     const colName = 'colStringTypes'
-    const allAscii = Array(95).map((_, i) => String.fromCharCode(32 + i)).join('')
+    const allAscii = [...Array(95)].map((_, i) => String.fromCharCode(32 + i)).join('')
     const string285 = allAscii + allAscii + allAscii
     const doc = {
       field1: string285, // VARCHAR
