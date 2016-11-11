@@ -12,7 +12,7 @@ const config = require('../momyfile.json')
 
 const waitingTime = 500 // waiting time for syncing from Mongo to MySQL
 
-describe('Momy CLI', () => {
+describe('Momy Tailer: basic', () => {
   let mo
   let my
   let tailer
@@ -170,7 +170,7 @@ describe('Momy CLI', () => {
       const r = yield mo.collection(colName).insertOne(doc)
       doc._id = r.insertedId
     }
-    yield wait(waitingTime) // wait for syncing
+    yield wait(waitingTime * 2) // wait for syncing
     for (const doc of docs) {
       const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
       assert.equal(r[0].field2, doc.field2)
@@ -180,4 +180,36 @@ describe('Momy CLI', () => {
   after(() => {
     tailer.stop()
   })
+})
+
+describe('Momy Tailer: importing', () => {
+  it('imports all docs already exist', co.wrap(function* () {
+    const mo = yield mongo.connect(config.src)
+    const my = new MysqlConnector(config.dist)
+    const tailer = new Tailer(config, false)
+
+    // clear existing records
+    yield mo.collection('colBasicTypes').deleteMany({})
+    yield mo.collection('colNumberTypes').deleteMany({})
+    yield mo.collection('colDateTypes').deleteMany({})
+    yield mo.collection('colStringTypes').deleteMany({})
+
+    const colName = 'colBasicTypes'
+    const docs = [...Array(10)].map((_, i) => ({
+      field1: true,
+      field2: i,
+      field3: `Tom-${i}`
+    }))
+    for (const doc of docs) {
+      const r = yield mo.collection(colName).insertOne(doc)
+      doc._id = r.insertedId
+    }
+    tailer.importAndStart(false)
+    yield wait(1000) // wait for syncing
+    for (const doc of docs) {
+      const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
+      assert.equal(r[0].field2, doc.field2)
+    }
+    tailer.stop()
+  }))
 })
