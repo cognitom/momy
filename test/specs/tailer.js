@@ -19,7 +19,11 @@ describe('Momy Tailer: basic', () => {
 
   before(co.wrap(function* () {
     mo = yield mongo.connect(config.src)
-    yield mo.collection('account').deleteMany({}) // clear all
+    // clear existing records
+    yield mo.collection('colBasicTypes').deleteMany({})
+    yield mo.collection('colNumberTypes').deleteMany({})
+    yield mo.collection('colDateTypes').deleteMany({})
+    yield mo.collection('colStringTypes').deleteMany({})
     my = new MysqlConnector(config.dist)
     tailer = new Tailer(config, false)
     tailer.importAndStart(false)
@@ -177,24 +181,20 @@ describe('Momy Tailer: basic', () => {
     }
   }))
 
-  after(() => {
+  after(co.wrap(function* () {
     tailer.stop()
-  })
+    yield wait(waitingTime)
+  }))
 })
 
 describe('Momy Tailer: importing', () => {
   it('imports all docs already exist', co.wrap(function* () {
     const mo = yield mongo.connect(config.src)
-    const my = new MysqlConnector(config.dist)
-    const tailer = new Tailer(config, false)
+    const colName = 'colBasicTypes'
 
     // clear existing records
-    yield mo.collection('colBasicTypes').deleteMany({})
-    yield mo.collection('colNumberTypes').deleteMany({})
-    yield mo.collection('colDateTypes').deleteMany({})
-    yield mo.collection('colStringTypes').deleteMany({})
+    yield mo.collection(colName).deleteMany({})
 
-    const colName = 'colBasicTypes'
     const docs = [...Array(10)].map((_, i) => ({
       field1: true,
       field2: i,
@@ -204,8 +204,12 @@ describe('Momy Tailer: importing', () => {
       const r = yield mo.collection(colName).insertOne(doc)
       doc._id = r.insertedId
     }
+
+    const tailer = new Tailer(config, false)
     tailer.importAndStart(false)
     yield wait(1000) // wait for syncing
+
+    const my = new MysqlConnector(config.dist)
     for (const doc of docs) {
       const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
       assert.equal(r[0].field2, doc.field2)
