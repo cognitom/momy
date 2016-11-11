@@ -123,6 +123,60 @@ describe('Momy CLI', () => {
     assert.equal(r4[0].field3, 'Tom')
   }))
 
+  it('inserts and remove a doc', co.wrap(function* () {
+    const colName = 'colBasicTypes'
+    const doc = {
+      field1: true, // boolean
+      field2: 123, // number
+      field3: 'Tom' // string
+    }
+    const r0 = yield mo.collection(colName).insertOne(doc)
+    yield wait(waitingTime) // wait for syncing
+    const r1 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r1[0].field3, 'Tom')
+
+    yield mo.collection(colName).removeOne({_id: r0.insertedId})
+    yield wait(waitingTime) // wait for syncing
+    const r2 = yield my.query(`SELECT * FROM ${colName} WHERE id = "${r0.insertedId}"`)
+    assert.equal(r2.length, 0)
+  }))
+
+  it('inserts multiple docs', co.wrap(function* () {
+    const colName = 'colBasicTypes'
+    const docs = [...Array(10)].map((_, i) => ({
+      field1: true,
+      field2: i,
+      field3: `Tom-${i}`
+    }))
+    for (const doc of docs) {
+      const r = yield mo.collection(colName).insertOne(doc)
+      doc._id = r.insertedId
+    }
+    yield wait(waitingTime) // wait for syncing
+    for (const doc of docs) {
+      const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
+      assert.equal(r[0].field2, doc.field2)
+    }
+  }))
+
+  it('inserts 1000 docs', co.wrap(function* () {
+    const colName = 'colBasicTypes'
+    const docs = [...Array(1000)].map((_, i) => ({
+      field1: true,
+      field2: i,
+      field3: `Tom-${i}`
+    }))
+    for (const doc of docs) {
+      const r = yield mo.collection(colName).insertOne(doc)
+      doc._id = r.insertedId
+    }
+    yield wait(waitingTime) // wait for syncing
+    for (const doc of docs) {
+      const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
+      assert.equal(r[0].field2, doc.field2)
+    }
+  }))
+
   after(() => {
     tailer.stop()
   })
