@@ -3,10 +3,9 @@
 
 const assert = require('assert')
 // const moment = require('moment')
-const defs = require('../../lib/defs')
-const NATIVE_TYPES = defs.NATIVE_TYPES
+const NATIVE_TYPES = require('../../lib/types')
 
-describe('Momy Defs', () => {
+describe('Momy Types', () => {
   it('BIGINT', () => {
     const convert = NATIVE_TYPES.BIGINT.convert
     assert.equal(convert(1), 1)

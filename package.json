@@ -17,7 +17,7 @@
     "posttest": "mongodb-runner stop --topology=replicaset --port=27017",
     "standard": "standard bin/*.js lib/*.js test/**/*.js",
     "mocha": "env TZ='Asia/Tokyo' mocha -t 20000 test/specs/*.js",
-    "mocha-wo-db": "env TZ='Asia/Tokyo' mocha -t 20000 test/specs/defs.js",
+    "mocha-wo-db": "env TZ='Asia/Tokyo' mocha -t 20000 test/specs/types.js",
     "try": "node ./bin/momy.js --config test/momyfile.json"
   },
   "dependencies": {
