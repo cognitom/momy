@@ -12,7 +12,7 @@
     "index.js"
   ],
   "scripts": {
-    "pretest": "node --max_semi_space_size=16 --max_old_space_size=1024 --max_executable_size=512 node_modules/.bin/mongodb-runner start --topology=replicaset --port=27017",
+    "pretest": "node --max_semi_space_size=2 --max_old_space_size=256 --max_executable_size=192 node_modules/.bin/mongodb-runner start --topology=replicaset --port=27017",
     "test": "npm run standard && npm run coverage",
     "posttest": "mongodb-runner stop --topology=replicaset --port=27017",
     "coverage": "env TZ='Asia/Tokyo' istanbul cover _mocha -- -R spec -t 20000 test/specs/*.js",
