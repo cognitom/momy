@@ -1,7 +1,6 @@
 {
   "src": "mongodb://localhost:30000/momy",
   "dist": "mysql://root@localhost:3306/momy",
-  "fieldCase": "camel",
   "collections": {
     "colBasicTypes": {
       "_id": "string",

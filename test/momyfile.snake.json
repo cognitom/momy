@@ -1,0 +1,16 @@
+{
+  "src": "mongodb://localhost:30000/momy",
+  "dist": "mysql://root@localhost:3306/momy",
+  "fieldCase": "snake",
+  "collections": {
+    "colSnakeCases": {
+      "_id": "string",
+      "field1": "string",
+      "field2.sub1": "string",
+      "field2.sub2": "string",
+      "field3.sub1.sub2": "string",
+      "field4_sub1_sub2": "string",
+      "field5Sub1Sub2": "string"
+    }
+  }
+}
