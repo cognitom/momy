@@ -12,9 +12,9 @@
     "index.js"
   ],
   "scripts": {
-    "pretest": "mongodb-runner start --topology=replicaset --port=27017",
+    "pretest": "mongodb-runner start --topology=replicaset --port=30000",
     "test": "npm run standard && npm run coverage",
-    "posttest": "mongodb-runner stop --topology=replicaset --port=27017",
+    "posttest": "mongodb-runner stop --topology=replicaset --port=30000",
     "coverage": "env TZ='Asia/Tokyo' istanbul cover _mocha -- -R spec -t 20000 test/specs/*.js",
     "standard": "standard bin/*.js lib/*.js test/**/*.js",
     "unit-test": "env TZ='Asia/Tokyo' mocha -t 20000 test/specs/types.js",

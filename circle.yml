@@ -3,10 +3,6 @@ machine:
   node:
     version: 4
 
-dependencies:
-  pre:
-    - sudo stop mongodb
-
 database:
   override:
     - mysql -u ubuntu -e "create database momy"
