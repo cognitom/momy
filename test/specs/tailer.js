@@ -147,7 +147,7 @@ describe('Momy Tailer: basic', () => {
 
   it('inserts multiple docs', co.wrap(function* () {
     const colName = 'colBasicTypes'
-    const docs = [...Array(10)].map((_, i) => ({
+    const docs = Array.from(Array(10)).map((_, i) => ({
       field1: true,
       field2: i,
       field3: `Tom-${i}`
@@ -165,7 +165,7 @@ describe('Momy Tailer: basic', () => {
 
   it('inserts 1000 docs', co.wrap(function* () {
     const colName = 'colBasicTypes'
-    const docs = [...Array(1000)].map((_, i) => ({
+    const docs = Array.from(Array(1000)).map((_, i) => ({
       field1: true,
       field2: i,
       field3: `Tom-${i}`
