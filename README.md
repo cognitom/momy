@@ -179,7 +179,7 @@ MIT
 This library was originally made by @doubaokun as [MongoDB-to-MySQL](https://github.com/doubaokun/MongoDB-to-MySQL) and rewritten by @cognitom.
 
 [circle-image]:https://img.shields.io/circleci/project/github/cognitom/momy.svg?style=flat-square
-[circle-url]:https://travis-ci.org/cognitom/momy
+[circle-url]:https://circleci.com/gh/cognitom/momy
 [npm-image]:https://img.shields.io/npm/v/momy.svg?style=flat-square
 [npm-url]:https://www.npmjs.com/package/momy
 [codecov-image]:https://img.shields.io/codecov/c/github/cognitom/momy.svg?style=flat-square
