@@ -5,7 +5,7 @@ machine:
 
 dependencies:
   pre:
-    - sudo /etc/init.d/mongodb stop
+    - sudo stop mongodb
 
 database:
   override:
