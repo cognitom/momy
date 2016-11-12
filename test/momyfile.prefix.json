@@ -1,0 +1,19 @@
+{
+  "src": "mongodb://localhost:30000/momy",
+  "dist": "mysql://root@localhost:3306/momy",
+  "prefix": "p_",
+  "collections": {
+    "colWithPrefix1": {
+      "_id": "string",
+      "field1": "boolean",
+      "field2": "number",
+      "field3": "string"
+    },
+    "colWithPrefix2": {
+      "_id": "string",
+      "field1": "boolean",
+      "field2": "number",
+      "field3": "string"
+    }
+  }
+}
