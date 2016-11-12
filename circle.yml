@@ -1,0 +1,12 @@
+machine:
+  timezone: Asia/Tokyo
+  node:
+    version: 4
+
+database:
+  override:
+    - mysql -u ubuntu -e "create database momy"
+
+test:
+  post:
+    - bash <(curl -s https://codecov.io/bash)

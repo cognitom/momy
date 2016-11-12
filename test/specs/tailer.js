@@ -85,7 +85,7 @@ describe('Momy Tailer: basic', () => {
 
   it('syncs a single doc with string types', co.wrap(function* () {
     const colName = 'colStringTypes'
-    const allAscii = [...Array(95)].map((_, i) => String.fromCharCode(32 + i)).join('')
+    const allAscii = Array.from(Array(95)).map((_, i) => String.fromCharCode(32 + i)).join('')
     const string285 = allAscii + allAscii + allAscii
     const doc = {
       field1: string285, // VARCHAR
@@ -174,7 +174,7 @@ describe('Momy Tailer: basic', () => {
       const r = yield mo.collection(colName).insertOne(doc)
       doc._id = r.insertedId
     }
-    yield wait(waitingTime * 2) // wait for syncing
+    yield wait(waitingTime * 4) // wait for syncing
     for (const doc of docs) {
       const r = yield my.query(`SELECT * FROM ${colName} WHERE id = "${doc._id}"`)
       assert.equal(r[0].field2, doc.field2)
@@ -183,7 +183,7 @@ describe('Momy Tailer: basic', () => {
 
   after(co.wrap(function* () {
     tailer.stop()
-    yield wait(waitingTime)
+    yield wait(waitingTime * 2)
   }))
 })
 
@@ -195,7 +195,7 @@ describe('Momy Tailer: importing', () => {
     // clear existing records
     yield mo.collection(colName).deleteMany({})
 
-    const docs = [...Array(10)].map((_, i) => ({
+    const docs = Array.from(Array(10)).map((_, i) => ({
       field1: true,
       field2: i,
       field3: `Tom-${i}`
