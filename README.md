@@ -84,6 +84,8 @@ Create a new `momyfile.json` file like this:
 - `dist`: the URL of the MySQL server
 - `prefix`: optional prefix for table name. The name of the table would be `t_collection1` in the example above.
 - `fieldCase`: optional. `snake` or `camel`. See the section below.
+- `exclusions`: optional. Chars or a range of chars to exclude: `"\uFFFD"`
+- `inclusions`: optional. Chars or a range of chars to include: `"\u0000-\u007F"`
 - `collections`: set the collections and fields to sync
 
 `_id` field is required for each collection and should be `string` or `number`.
