@@ -1,0 +1,13 @@
+{
+  "src": "mongodb://localhost:30000/momy",
+  "dist": "mysql://root@localhost:3306/momy",
+  "inclusions": "\u0000-\u007F",
+  "collections": {
+    "colWithInclusions": {
+      "_id": "string",
+      "field1": "boolean",
+      "field2": "number",
+      "field3": "string"
+    }
+  }
+}
