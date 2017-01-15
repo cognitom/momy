@@ -56,7 +56,7 @@ Create a new `momyfile.json` file like this:
 ```json
 {
   "src": "mongodb://localhost:27017/dbname",
-  "dist": "mysql://root@localhost:3306/dbname",
+  "dist": "mysql://root:password@localhost:3306/dbname",
   "prefix": "t_",
   "case": "camel",
   "collections": {
