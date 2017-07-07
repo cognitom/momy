@@ -10,7 +10,7 @@ const MysqlConnector = require('../mysql-connector')
 const momyfileCamel = require('../momyfile.camel.json')
 const momyfileSnake = require('../momyfile.snake.json')
 
-const waitingTime = 500
+const waitingTime = 1000
 
 describe('Momy: fieldCase', () => {
   it('camel', co.wrap(function* () {
