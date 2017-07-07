@@ -83,6 +83,27 @@ describe('Momy: core', () => {
     assert.equal(r1[0].field3, moment(now).format('HH:mm:ss'))
   }))
 
+  it('syncs a single doc with date types (object edition) #15', co.wrap(function* () {
+    const colName = 'colDateTypes'
+    const now = new Date()
+    const doc = {
+      field1: now, // DATE
+      field2: now, // DATETIME
+      field3: now // TIME
+    }
+    const r0 = yield mo.collection(colName).insertOne(doc)
+    yield wait(waitingTime) // wait for syncing
+    const r1 = yield my.query(`SELECT * FROM ${colName} WHERE _id = "${r0.insertedId}"`)
+
+    assert.equal(
+      moment(r1[0].field1).format('YYYY-MM-DD'),
+      moment(now).format('YYYY-MM-DD'))
+    assert.equal(
+      moment(r1[0].field2).format('YYYY-MM-DD HH:mm:ss'),
+      moment(now).format('YYYY-MM-DD HH:mm:ss'))
+    assert.equal(r1[0].field3, moment(now).format('HH:mm:ss'))
+  }))
+
   it('syncs a single doc with string types', co.wrap(function* () {
     const colName = 'colStringTypes'
     const allAscii = Array.from(Array(95)).map((_, i) => String.fromCharCode(32 + i)).join('')
