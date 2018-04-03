@@ -79,8 +79,8 @@ Create a new `momyfile.json` file like this:
     },
     "collection2": {
       "collectionName" : "datapayloads",
-		  "tableName" : "collection2Table",
-		  "condition" : { "key":"whatPropertyToFilter", "value": "ValueWhichShouldBeEqual" },
+      "tableName" : "collection2Table",
+      "condition" : { "key":"whatPropertyToFilter", "value": "ValueWhichShouldBeEqual" },
       "fields": {
         "_id": "string",
         "createdAt": "DATETIME",
