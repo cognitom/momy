@@ -2,6 +2,12 @@
 [![NPM Status][npm-image]][npm-url]
 [![Codecov Status][codecov-image]][codecov-url]
 
+# additional changes in this fork
+
+- added a way to generate views on the created tables by momy as inner joins
+- added a way to control tablename and a filter condition for mongo query to seperate on inner properties which data results in what table on SQL side 
+- check the example configuration for both below
+
 # Momy
 
 [Momy](https://goo.gl/maps/s9hXxKyoACv) is a simple cli tool for replicating MongoDB to MySQL in realtime.
@@ -61,20 +67,37 @@ Create a new `momyfile.json` file like this:
   "case": "camel",
   "collections": {
     "collection1": {
-      "_id": "number",
-      "createdAt": "DATETIME",
-      "field1": "number",
-      "field2": "string",
-      "field3": "boolean",
-      "field4.subfield": "string"
+      "collectionName" : "datapayloads",
+      "fields": {
+        "_id": "number",
+        "createdAt": "DATETIME",
+        "field1": "number",
+        "field2": "string",
+        "field3": "boolean",
+        "field4.subfield": "string"
+      }
     },
     "collection2": {
-      "_id": "string",
-      "createdAt": "DATETIME",
-      "field1": "number",
-      "field2": "string",
-      "field3": "boolean",
-      "field4": "TEXT"
+      "collectionName" : "datapayloads",
+		  "tableName" : "collection2Table",
+		  "condition" : { "key":"whatPropertyToFilter", "value": "ValueWhichShouldBeEqual" },
+      "fields": {
+        "_id": "string",
+        "createdAt": "DATETIME",
+        "field1": "number",
+        "field2": "string",
+        "field3": "boolean",
+        "field4": "TEXT"
+      }
+    }
+  },
+  "views": {
+    "view1":{
+      "sourceTableName" : "collection1",
+		  "sourceTablePrefix" : "c1",
+		  "joins" :{
+		    "collection1": {"joinOn":"_id", "tableToJoin":"collection2Table", "joinBy":"field1", "joinIDfrom":"a", "joinIDto":"b",    "targetTablePrefix":"c2"}
+		}
     }
   }
 }
