@@ -96,7 +96,14 @@ Create a new `momyfile.json` file like this:
       "sourceTableName" : "collection1",
       "sourceTablePrefix" : "c1",
       "joins" :{
-        "collection1": {"joinOn":"_id", "tableToJoin":"collection2Table", "joinBy":"field1", "joinIDfrom":"a", "joinIDto":"b",    "targetTablePrefix":"c2"}
+        "collection1" : {
+          "joinOn" : "_id", 
+          "tableToJoin" : "collection2Table", 
+          "joinBy" : "field1", 
+          "joinIDfrom" : "a", 
+          "joinIDto" : "b",    
+          "targetTablePrefix" : "c2"
+        }
       }
     }
   }
