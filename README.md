@@ -94,10 +94,10 @@ Create a new `momyfile.json` file like this:
   "views": {
     "view1":{
       "sourceTableName" : "collection1",
-		  "sourceTablePrefix" : "c1",
-		  "joins" :{
-		    "collection1": {"joinOn":"_id", "tableToJoin":"collection2Table", "joinBy":"field1", "joinIDfrom":"a", "joinIDto":"b",    "targetTablePrefix":"c2"}
-		}
+      "sourceTablePrefix" : "c1",
+      "joins" :{
+        "collection1": {"joinOn":"_id", "tableToJoin":"collection2Table", "joinBy":"field1", "joinIDfrom":"a", "joinIDto":"b",    "targetTablePrefix":"c2"}
+      }
     }
   }
 }
