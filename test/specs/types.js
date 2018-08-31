@@ -79,4 +79,17 @@ describe('Momy Types', () => {
     assert.equal(convert(undefined), "''")
     assert.equal(convert('\x07'), "''") // skip a control char
   })
+
+  it('JSON', () => {
+    const convert = NATIVE_TYPES.JSON.convert
+    assert.equal(convert(null), null)
+    assert.equal(convert(undefined), null)
+    assert.equal(convert({a: null, b: undefined}), '\'{\\"a\\":null}\'')
+    assert.equal(convert(true), '\'true\'')
+    assert.equal(convert(false), '\'false\'')
+    assert.equal(convert('string'), '\'\\"string\\"\'')
+    assert.equal(convert([1, 2, '3']), '\'[1,2,\\"3\\"]\'')
+    assert.equal(convert({age: 1, name: 'John', ids: [5, 10, 15]}), '\'{\\"age\\":1,\\"name\\":\\"John\\",\\"ids\\":[5,10,15]}\'')
+    assert.equal(convert('\x07\r\n\t'), '\'\\"\\\\u0007\\\\r\\\\n\\\\t\\"\'') // escape control chars
+  })
 })
