@@ -195,7 +195,7 @@ describe('Momy: core', () => {
       const r = yield mo.collection(colName).insertOne(doc)
       doc._id = r.insertedId
     }
-    yield wait(waitingTime * 4) // wait for syncing
+    yield wait(waitingTime * 10) // wait for syncing
     for (const doc of docs) {
       const r = yield my.query(`SELECT * FROM ${colName} WHERE _id = "${doc._id}"`)
       assert.equal(r[0].field2, doc.field2)

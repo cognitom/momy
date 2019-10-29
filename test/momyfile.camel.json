@@ -1,6 +1,6 @@
 {
-  "src": "mongodb://localhost:30000/momy",
-  "dist": "mysql://root@localhost:3306/momy",
+  "src": "mongodb://momy-mongod:27017/momy",
+  "dist": "mysql://root@momy-mysqld:3306/momy",
   "fieldCase": "camel",
   "collections": {
     "colCamelCases": {
