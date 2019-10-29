@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/.."
+dirpath="$( pwd -P )" # study where I am
+project=${dirpath##*/} # set the name of dir
+
+docker build -t $project-app -f ./dev/Dockerfile .

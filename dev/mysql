@@ -1,0 +1,14 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/.." # move to the parent dir
+dirpath="$( pwd -P )" # study the dir path
+project=${dirpath##*/} # set the name of dir
+
+echo $@
+
+docker run \
+  --name $project-mysql-client \
+  --interactive --tty --rm \
+  --network $project \
+  mysql:5.6 \
+  mysql --host=$project-mysqld $@

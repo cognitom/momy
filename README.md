@@ -149,10 +149,10 @@ $ forever momy --config momyfile.json
 
 ## For contributors
 
-Before testing, install MySQL into your environment. Then, create a new database:
+Enter the Docker container for dev:
 
 ```bash
-$ mysql -uroot -e 'create database momy;'
+$ bash dev/up
 ```
 
 To run the tests:
@@ -161,17 +161,22 @@ To run the tests:
 $ npm test
 ```
 
-To test the code manually, start `mongodb` and `momy`:
+To test the code manually, start `momy`:
 
 ```bash
-$ npm run pretest
 $ npm run try
 ```
 
-Do something, then kill `momy` and stop `mongodb`:
+Then, open a new terminal on the host (not inside the container), and run mongo client:
 
 ```bash
-$ npm run posttest
+$ bash dev/mongo
+```
+
+Do something, and run mysql client to check syncing:
+
+```bash
+$ bash dev/mysql
 ```
 
 ## License
