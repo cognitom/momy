@@ -13,15 +13,25 @@
 
 ## Installation
 
+Install via npm:
+
 ```bash
 $ npm install -g momy
 ```
 
-or install it within the project locally:
+Or use docker:
 
 ```bash
-$ npm install --save momy
+$ docker run -it --rm -v $(pwd):/workdir cognitom/momy
 ```
+
+You might want to create an alias, for example
+
+```bash
+$ echo 'alias momy="docker run -it --rm -v $(pwd):/workdir cognitom/momy"' >> ~/.bashrc
+```
+
+See more detail about Docker configurations below.
 
 ## Preparation
 
@@ -145,6 +155,72 @@ or
 
 ```bash
 $ forever momy --config momyfile.json
+```
+
+## Usage with Docker
+
+First thing first, create a network for your containers:
+
+```bash
+$ docker network create my-net
+```
+
+Then, launch database servers:
+
+```bash
+$ docker run \
+    --name my-mongod \
+    --detach --rm \
+    --network my-net \
+    --mount type=volume,source=my-mongo-store,target=/data/db \
+    mongo --replSet "rs0"
+$ docker run \
+    --name my-mysqld \
+    --detach --rm \
+    --network my-net \
+    --mount type=volume,source=my-mysql-store,target=/var/lib/mysql \
+    --env MYSQL_ALLOW_EMPTY_PASSWORD=yes \
+    mysql
+```
+
+If this is the first time to run the containers above, you need to initialize them:
+
+```bash
+$ docker exec my-mongod mongo --eval 'rs.initiate()'
+$ docker exec my-mysqld mysql -e 'CREATE DATABASE momy;'
+```
+
+Create `momyfile.json` like this:
+
+```json
+{
+  "src": "mongodb://my-mongod:27017/momy",
+  "dist": "mysql://root@my-mysqld:3306/momy",
+  "collections": {...}
+}
+```
+
+**Note**: you must change username, password, port, ...etc. to fit your environment.
+
+OK, let's run `momy` with `--import` option:
+
+```bash
+$ docker run \
+    --interactive --tty --rm \
+    --network my-net \
+    --mount type=bind,source=$(pwd),target=/workdir \
+    cognitom/momy --import
+```
+
+Everything goes well? Then, stop the container (Ctrl + C). Now you can run it as a daemon:
+
+```bash
+$ docker run \
+    --detach --rm \
+    --restart unless-stopped \
+    --network my-net \
+    --mount type=bind,source=$(pwd),target=/workdir \
+    cognitom/momy
 ```
 
 ## For contributors
