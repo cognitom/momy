@@ -23,4 +23,4 @@ COPY lib /app/lib
 WORKDIR /workdir
 
 # wrap tini for signal handling
-ENTRYPOINT ["/tini", "--", "node", "/app/bin/momy.js"]
+ENTRYPOINT ["/tini", "--", "/nodejs/bin/node", "/app/bin/momy.js"]
