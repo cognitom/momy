@@ -1,0 +1,63 @@
+{
+  "src": "mongodb://localhost:27017/sales",
+  "dist": "mysql://root:@localhost:3306/mongo_to_mysql",
+  "prefix": "t_",
+  "fieldCase": "snake",
+  "collections": {
+    "packages": {
+      "_id": "string",
+      "name": "string"
+    }
+  },
+  "relations": {
+    "tags": {
+      "dataType": "array",
+      "collection": {
+        "package_to_tag": {
+          "parent_id": "string",
+          "tag_id": "string"
+        }
+      }
+    },
+    "level_id": {
+      "dataType": "array",
+      "collection": {
+        "package_to_level": {
+          "parent_id": "string",
+          "level_id": "string"
+        }
+      }
+    },
+    "price_data": {
+      "dataType": "arrayObject",
+      "collection": {
+        "package_to_price_data": {
+          "_id": "string",
+          "parent_id": "string",
+          "duration_type": "string"
+        }
+      }
+    },
+    "course_data": {
+      "dataType": "arrayObject",
+      "collection": {
+        "package_to_course": {
+          "parent_id": "string",
+          "course_id": "string",
+          "name": "string"
+        }
+      }
+    },
+    "lesson_data": {
+      "dataType": "arrayObject",
+      "collection": {
+        "package_to_lesson": {
+          "parent_id": "string",
+          "lesson_id": "string",
+          "name": "string",
+          "free_content": "boolean"
+        }
+      }
+    }
+  }
+}
