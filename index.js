@@ -1,3 +1,1 @@
-'use strict'
-
-module.exports = require('./lib/tailer.js')
+export * from './lib/tailer.js'

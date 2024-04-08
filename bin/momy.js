@@ -1,9 +1,6 @@
 #!/usr/bin/env node
-
-'use strict'
-
-const Tailer = require('../lib/tailer.js')
-const fs = require('fs')
+import Tailer from '../lib/tailer.js'
+import fs from 'fs'
 
 const DEFAULT_CONFIG_PATH = 'momyfile.json'
 const refresh = process.argv.some(c => c === '--import')
