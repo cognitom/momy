@@ -1,8 +1,6 @@
-'use strict'
+import mysql from 'mysql'
 
-const mysql = require('mysql')
-
-module.exports = class {
+export class MysqlConnector {
   constructor (url) {
     this.con = mysql.createConnection(url)
     this.con.connect(function (err) {
@@ -16,5 +14,8 @@ module.exports = class {
         resolve(results)
       })
     })
+  }
+  close () {
+    this.con.end()
   }
 }

@@ -1,23 +1,26 @@
 /* eslint-env mocha */
-'use strict'
 
-const assert = require('assert')
-const co = require('co')
-const mongo = require('mongodb').MongoClient
-const Tailer = require('../../lib/tailer.js')
-const wait = require('../wait')
-const MysqlConnector = require('../mysql-connector')
-const momyfile = require('../momyfile.json')
+import assert from 'assert'
+import fs from 'fs'
+import { MongoClient } from 'mongodb'
+import wait from '../wait.js'
 
+import Tailer from '../../lib/tailer.js'
+import { MysqlConnector } from '../mysql-connector.js'
+import { getDbNameFromUri } from '../../lib/util.js'
+
+const momyfile = JSON.parse(fs.readFileSync('./test/momyfile.json'))
 const waitingTime = 500
 
 describe('Momy: importing', () => {
-  it('imports all docs already exist', co.wrap(function* () {
-    const mo = yield mongo.connect(momyfile.src)
+  it('imports all docs already exist', async function () {
+    const dbname = getDbNameFromUri(momyfile.src)
+    const client = new MongoClient(momyfile.src)
+    const mo = client.db(dbname)
     const colName = 'colBasicTypes'
 
     // clear existing records
-    yield mo.collection(colName).deleteMany({})
+    await mo.collection(colName).deleteMany({})
 
     const docs = Array.from(Array(10)).map((_, i) => ({
       field1: true,
@@ -25,56 +28,63 @@ describe('Momy: importing', () => {
       field3: `Tom-${i}`
     }))
     for (const doc of docs) {
-      const r = yield mo.collection(colName).insertOne(doc)
+      const r = await mo.collection(colName).insertOne(doc)
       doc._id = r.insertedId
     }
+    client.close()
 
     const tailer = new Tailer(momyfile, false)
     tailer.importAndStart(false)
-    yield wait(waitingTime * 2) // wait for syncing
+    await wait(waitingTime * 2) // wait for syncing
     tailer.stop()
-    yield wait(waitingTime * 2)
+    await wait(waitingTime * 2)
 
     const my = new MysqlConnector(momyfile.dist)
     for (const doc of docs) {
-      const r = yield my.query(`SELECT * FROM ${colName} WHERE _id = "${doc._id}"`)
+      const r = await my.query(`SELECT * FROM ${colName} WHERE _id = "${doc._id}"`)
       assert.equal(r[0].field2, doc.field2)
     }
-  }))
+    my.close()
+  })
 
-  it('imports all docs and restart syncing', co.wrap(function* () {
-    const mo = yield mongo.connect(momyfile.src)
+  it('imports all docs and restart syncing', async function () {
+    const dbname = getDbNameFromUri(momyfile.src)
+    const client = new MongoClient(momyfile.src)
+    const mo = client.db(dbname)
     const colName = 'colBasicTypes'
 
     // clear existing records
-    yield mo.collection(colName).deleteMany({})
+    await mo.collection(colName).deleteMany({})
 
-    const r0 = yield mo.collection(colName).insertOne({
+    const r0 = await mo.collection(colName).insertOne({
       field1: true,
       field2: 1,
       field3: 'Tom'
     })
     const tailer = new Tailer(momyfile, false)
     tailer.importAndStart(false)
-    yield wait(1000) // wait for syncing
+    await wait(waitingTime * 2) // wait for syncing
     tailer.stop()
-    yield wait(waitingTime) // wait for stopping
+    await wait(waitingTime) // wait for stopping
 
     tailer.start(false)
-    yield wait(waitingTime) // wait for starting
-    const r1 = yield mo.collection(colName).insertOne({
+    await wait(waitingTime * 2) // wait for starting
+    const r1 = await mo.collection(colName).insertOne({
       field1: true,
       field2: 2,
       field3: 'John'
     })
-    yield wait(waitingTime) // wait for syncing
+    client.close()
+    await wait(waitingTime * 2) // wait for syncing
     tailer.stop()
-    yield wait(waitingTime * 2)
+    await wait(waitingTime) // wait for stopping
 
     const my = new MysqlConnector(momyfile.dist)
-    const q0 = yield my.query(`SELECT * FROM ${colName} WHERE _id = "${r0.insertedId}"`)
-    const q1 = yield my.query(`SELECT * FROM ${colName} WHERE _id = "${r1.insertedId}"`)
+    const q0 = await my.query(`SELECT * FROM ${colName} WHERE _id = "${r0.insertedId}"`)
+    const q1 = await my.query(`SELECT * FROM ${colName} WHERE _id = "${r1.insertedId}"`)
+    my.close()
+
     assert.equal(q0[0].field3, 'Tom')
     assert.equal(q1[0].field3, 'John')
-  }))
+  })
 })

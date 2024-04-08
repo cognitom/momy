@@ -1,9 +1,8 @@
 /* eslint-env mocha */
 'use strict'
 
-const assert = require('assert')
-// const moment = require('moment')
-const NATIVE_TYPES = require('../../lib/types')
+import assert from 'assert'
+import NATIVE_TYPES from '../../lib/types.js'
 
 describe('Momy Types', () => {
   it('BIGINT', () => {
