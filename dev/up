@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mongo_version="3.2.21"
+mongo_version="5.0.26"
 mysql_version="5.6"
 app_dir="/app"
 home_dir="/home/app"
@@ -18,12 +18,14 @@ docker run \
   --name $project-mongod \
   --detach --rm \
   --network $project \
+  --publish 27017:27017 \
   mongo:$mongo_version --replSet "rs0" > /dev/null
 
 docker run \
   --name $project-mysqld \
   --detach --rm \
   --network $project \
+  --publish 3306:3306 \
   --env MYSQL_ALLOW_EMPTY_PASSWORD=yes \
   mysql:$mysql_version > /dev/null
 
@@ -47,8 +49,7 @@ docker run \
   --name $project-app \
   --interactive --tty --rm \
   --network $project \
-  --env SSH_AUTH_SOCK=/ssh-agent \
-  --mount type=bind,source=$SSH_AUTH_SOCK,target=/ssh-agent \
+  --publish 9229:9229 \
   --mount type=bind,source=$dirpath,target=$app_dir \
   --mount type=bind,source="$HOME/.ssh",target="$home_dir/.ssh" \
   --mount type=bind,source="$HOME/.gitconfig",target="$home_dir/.gitconfig" \

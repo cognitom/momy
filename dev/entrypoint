@@ -5,21 +5,32 @@ if [ ! -f /.dockerenv ]; then
     exit 1
 fi
 
+# Create a user which has the common uid:gid with the host,
+# or check if the user exists
+
 host_uid=$(ls -n $0 | awk '{print $3}') # study who my owner is
 host_gid=$(ls -n $0 | awk '{print $4}') # study what I belong to
 
-# Create a user which has the common uid:gid with the host
-# TODO: if the user with the uid already exists,
-#       assign the name of user to `user`.
-user=app
-groupadd --gid $host_gid $user
-useradd --uid $host_uid --gid $host_gid --shell /bin/bash $user
+user=$(cat /etc/passwd | grep ":x:$host_uid:" | cut -d: -f1)
+group=$(cat /etc/group | grep ":x:$host_gid:" | cut -d: -f1)
 
-# Add some default files to the home
-# note: it's needed because the volumes might be mounted before `useradd`.
-mkdir -p /home/$user
-cp -r /etc/skel/. /home/$user
-chown $user:$user /home/$user /home/$user/.bash* /home/$user/.profile
+if [ -z "$group" ]; then
+  group=app
+  echo "Creating a group..."
+  groupadd --gid $host_gid $group
+fi
+if [ -z "$user" ]; then
+  user=app
+  echo "Creating an user..."
+  useradd --uid $host_uid --gid $host_gid --shell /bin/bash $user
+
+  # Add some default files to the home
+  mkdir -p /home/$user
+  cp -r /etc/skel/. /home/$user
+  chown $user:$group /home/$user /home/$user/.bash* /home/$user/.profile
+else
+  echo "The user $user already exists in this container (id:$host_uid)"
+fi
 
 # Execute the command left, or enter `bash`
 if [ $# -gt 0 ]; then

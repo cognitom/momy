@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mongo_version="5.0.26"
+
 cd "$(dirname "$0")/.." # move to the parent dir
 dirpath="$( pwd -P )" # study the dir path
 project=${dirpath##*/} # set the name of dir
@@ -8,5 +10,5 @@ docker run \
   --name $project-mongo-client \
   --interactive --tty --rm \
   --network $project \
-  mongo:3.2.21 \
+  mongo:$mongo_version \
   mongo --host=$project-mongod $@

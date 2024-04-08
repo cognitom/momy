@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:18
 
 USER root
 
@@ -13,9 +13,9 @@ WORKDIR /app
 # Node tools
 ENV NPM_CONFIG_LOGLEVEL=warn
 RUN npm install --global \
-    npm-check-updates@^2.0.0 \
-    istanbul@^0.4.5 \
-    mocha@^3.1.2 \
-    standard@^8.5.0
+    npm@10.5.1 \
+    npm-check-updates@^16.14.18 \
+    mocha@^10.4.0 \
+    standard@^17.1.0
 
 ENTRYPOINT ["bash", "/app/dev/entrypoint"]
