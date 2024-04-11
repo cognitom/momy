@@ -1,9 +1,7 @@
-FROM node:10 AS build-env
+FROM node:18 AS build-env
 
 # install tini
 ENV TINI_VERSION v0.18.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
 
 # install dependencies via npm
 WORKDIR /app
@@ -11,8 +9,7 @@ COPY package*.json ./
 RUN npm install --only=production
 
 # multi-stage build for smaller package
-FROM gcr.io/distroless/nodejs
-COPY --from=build-env /tini /tini
+FROM node:18-alpine
 COPY --from=build-env /app /app
 
 # copy momy itself
@@ -23,4 +20,4 @@ COPY lib /app/lib
 WORKDIR /workdir
 
 # wrap tini for signal handling
-ENTRYPOINT ["/tini", "--", "/nodejs/bin/node", "/app/bin/momy.js"]
+ENTRYPOINT ["/usr/local/bin/node", "/app/bin/momy.js"]
