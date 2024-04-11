@@ -1,6 +1,6 @@
 {
   "name": "momy",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "MongoDB to MySQL replication",
   "type": "module",
   "exports": "./index.js",
