@@ -1,8 +1,5 @@
 FROM node:18 AS build-env
 
-# install tini
-ENV TINI_VERSION v0.18.0
-
 # install dependencies via npm
 WORKDIR /app
 COPY package*.json ./
