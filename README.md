@@ -218,6 +218,7 @@ Everything goes well? Then, stop the container (Ctrl + C). Now you can run it as
 $ docker run \
     --detach --rm \
     --restart unless-stopped \
+    --init \
     --network my-net \
     --mount type=bind,source=$(pwd),target=/workdir \
     cognitom/momy
