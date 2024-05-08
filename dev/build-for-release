@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cd "$(dirname "$0")/.."
+dirpath="$( pwd -P )" # study where I am
+package_version=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
+
+docker build \
+  -t cognitom/momy:latest \
+  -t cognitom/momy:v$package_version \
+  .
