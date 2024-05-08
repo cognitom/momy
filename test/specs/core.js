@@ -153,6 +153,23 @@ describe('Momy: core', () => {
     assert.equal(r4[0].field3, 'Tom')
   })
 
+  it('syncs a doc without a specific field which is added later', async function () {
+    const colName = 'colBasicTypes'
+    const doc = {
+      field1: true, // boolean
+      field2: 123 // number
+    }
+    const r0 = await mo.collection(colName).insertOne(doc)
+    await wait(waitingTime) // wait for syncing
+    const r1 = await my.query(`SELECT * FROM ${colName} WHERE _id = "${r0.insertedId}"`)
+    console.log(r1[0].field3)
+
+    await mo.collection(colName).updateOne({ _id: r0.insertedId }, { $set: { field3: 'John' } })
+    await wait(waitingTime) // wait for syncing
+    const r2 = await my.query(`SELECT * FROM ${colName} WHERE _id = "${r0.insertedId}"`)
+    assert.equal(r2[0].field3, 'John')
+  })
+
   it('inserts and remove a doc', async function () {
     const colName = 'colBasicTypes'
     const doc = {
