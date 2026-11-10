@@ -1,0 +1,47 @@
+services:
+  node:
+    image: node:18
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    working_dir: /app
+    labels:
+      polar.commands: "node,npm,npx"
+    # Named volumes are created as root. Work runs as the node user (uid 1000).
+    command: sh -c "chown node:node /app/node_modules && exec sleep infinity"
+    healthcheck:
+      test: ["CMD", "node", "--version"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+    depends_on:
+      momy-mongod:
+        condition: service_healthy
+      momy-mysqld:
+        condition: service_healthy
+
+  # Disposable databases for tests. Service names match the hosts in test/momyfile*.json.
+  momy-mongod:
+    image: mongo:5.0
+    command: --replSet rs0 --bind_ip_all
+    # Initiate the replica set on first run. Stay unhealthy until this node is primary.
+    healthcheck:
+      test: ["CMD", "mongo", "--quiet", "--eval", "if(!rs.status().ok){rs.initiate({_id:'rs0',members:[{_id:0,host:'momy-mongod:27017'}]})}; quit(db.isMaster().ismaster ? 0 : 1)"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  momy-mysqld:
+    image: mysql:5.6
+    platform: linux/amd64 # the image is amd64 only
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: momy
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  node_modules:
