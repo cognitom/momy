@@ -32,5 +32,9 @@
     "url": "git://github.com/cognitom/momy.git"
   },
   "author": "Tsutomu Kawamura",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^10.8.2",
+    "standard": "^17.1.2"
+  }
 }
